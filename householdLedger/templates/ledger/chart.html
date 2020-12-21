@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="container">
+		<div class="row mt-5">
+			<h3>일간 차트</h3>
+			<canvas id="daily-chart"></canvas>
+		</div>
+		<div class="row mt-5">
+			<h3>주간 차트</h3>
+			<canvas id="weekly-chart"></canvas>
+		</div>
+		<div class="row mt-5">
+			<h3>월간 차트</h3>
+			<canvas id="monthly-chart"></canvas>
+		</div>
+	</div>
+	<div id="data" class="d-none">{{ data }}</div>
+{% endblock %}
+
+{% block script %}
+	<script src="{{ url_for('static', filename='js/chart-2.9.4.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/chart.js') }}?rnd={{ range(1,1000)|random }}"></script>
+{% endblock %}

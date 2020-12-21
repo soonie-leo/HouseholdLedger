@@ -28,6 +28,29 @@ def index():
     return render_template("ledger/index.html", ledger=ledger)
 
 
+@bp.route("/chart")
+@login_required
+def chart():
+    db = get_db()
+    ledger = db.execute(
+        "SELECT id, user_id, date, income, expenses, tag, order_num"
+        " FROM ledger WHERE user_id = ? ORDER BY order_num DESC", [g.user["id"]]
+    ).fetchall()
+
+    data = {}
+    for row in ledger:
+        date = row["date"].strftime("%Y.%m.%d")
+        if date not in data:
+            data[date] = {
+                "income": 0,
+                "expenses": 0
+            }
+        data[date]["income"] += row["income"]
+        data[date]["expenses"] += row["expenses"]
+
+    return render_template("ledger/chart.html", data=json.dumps(data))
+
+
 @bp.route("/insert", methods=["POST"])
 @login_required
 def insert():
