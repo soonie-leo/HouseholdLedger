@@ -80,3 +80,7 @@ body {
 .login-form .bottom-action {
 	font-size: 14px;
 }
+.checkbox-area * {
+	display: inline-block;
+	vertical-align: middle;
+}

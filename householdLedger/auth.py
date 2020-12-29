@@ -82,6 +82,8 @@ def register():
 
 @bp.route("/login", methods=("GET", "POST"))
 def login():
+	isLogout = request.args.get("isLogout", False)
+
 	if request.method == "POST":
 		username = request.form["username"]
 		password = request.form["password"]
@@ -99,14 +101,14 @@ def login():
 		if error is None:
 			session.clear()
 			session["user_id"] = user["id"]
-			return redirect(url_for("index"))
+			return redirect(url_for("ledger.home"))
 
 		flash(error)
 
-	return render_template("auth/login.html")
+	return render_template("auth/login.html", isLogout=isLogout)
 
 
 @bp.route("/logout")
 def logout():
 	session.clear()
-	return redirect(url_for("index"))
+	return redirect(url_for("auth.login", isLogout=True))
