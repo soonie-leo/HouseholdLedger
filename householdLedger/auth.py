@@ -30,7 +30,7 @@ def admin_required(view):
 	@functools.wraps(view)
 	def wrapped_view(**kwargs):
 		if g.user["username"] != "admin":
-			return redirect(url_for("ledger.index"))
+			return redirect(url_for("ledger.home"))
 		return view(**kwargs)
 	
 	return wrapped_view

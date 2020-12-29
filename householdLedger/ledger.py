@@ -19,6 +19,11 @@ bp = Blueprint("ledger", __name__, url_prefix="/ledger")
 @bp.route("/")
 @login_required
 def index():
+	return redirect(url_for("ledger.home"))
+
+@bp.route("/home")
+@login_required
+def home():
     db = get_db()
     ledger = db.execute(
         "SELECT id, user_id, date, detail, income, expenses, source, tag, note, order_num"
